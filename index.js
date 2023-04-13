@@ -14,9 +14,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// {
-//   senderName:user
-//   }
 app.post("/user", async (req, res) => {
   const username = req.body.name;
 
@@ -30,10 +27,11 @@ app.post("/user", async (req, res) => {
 });
 
 app.post("/users", async (req, res) => {
-  const query=req.body.inputValue;
+  const query = req.body.inputValue;
   const users = await getUsers(query);
   res.status(200).send(users);
 });
+
 app.get("/messages", async (req, res) => {
   const messages = await getMessages();
   res.status(200).send(messages);
@@ -61,8 +59,8 @@ app.post("/message", async (req, res) => {
 async function getUsers(query) {
   const users = await prisma.user.findMany({
     where: {
-      name: { contains: query, mode: 'insensitive' }
-    }
+      name: { contains: query, mode: "insensitive" },
+    },
   });
   return users;
 }
